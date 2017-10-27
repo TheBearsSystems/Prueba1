@@ -1,0 +1,89 @@
+package com.example.alumno01.practica1p2;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    int  JValores[][] = new int[2][2];
+    EditText JCaja[] = new EditText[4];
+    Button botones[]=new Button[2];
+
+    //ARRAY LIST
+    ArrayList<Integer> ArrayValores = new ArrayList<>();
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        JCaja[0] = (EditText) (super.findViewById(R.id.CajaV1));
+        JCaja[1] = (EditText) (super.findViewById(R.id.CajaV2));
+        JCaja[2] = (EditText) (super.findViewById(R.id.CajaV3));
+        JCaja[3] = (EditText) (super.findViewById(R.id.CajaV4));
+
+        botones[0]=(Button)(super.findViewById(R.id.ButtonGuardar));
+        botones[1]=(Button)(super.findViewById(R.id.ButtonLLamar));
+
+        //JValores[0][0] = Integer.parseInt(JCaja[0]);***************************************************************************************
+
+        //JValores[0][0] = String.valueOf((EditText) (super.findViewById(R.id.CajaV1)));
+       // JValores[0][1] = String.valueOf((EditText) (super.findViewById(R.id.CajaV1)));
+        //JValores[1][0] = String.valueOf((EditText) (super.findViewById(R.id.CajaV1)));
+       // JValores[1][1] = String.valueOf((EditText) (super.findViewById(R.id.CajaV1)));
+
+        for(int i=0; i < botones.length; i++){
+        botones[i].setOnClickListener(this);
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view.getId()==R.id.ButtonGuardar){
+            Toast.makeText(MainActivity.this,"Guardado", Toast.LENGTH_SHORT).show();
+
+          //  Toast.makeText(MainActivity.this , ""+JCaja[0], Toast.LENGTH_LONG).show();
+           /* int acum=0;
+            for(int r=0;r<=1;r++){
+                for(int c=0;c<=1;c++){
+                    JValores[r][c] = Integer.parseInt(JCaja[acum].getText().toString());
+                    acum++;
+                }
+            }
+            for(int r=0;r<=1;r++){
+                for(int c=0;c<=1;c++){
+                    Toast.makeText(MainActivity.this,""+JValores[r][c], Toast.LENGTH_SHORT).show();
+                    acum++;
+                }
+
+            }
+            */
+            //A QUI GUARDO
+            for (int i=0; i<4;i++){
+
+                ArrayValores.add(i, Integer.parseInt(JCaja[i].getText().toString()));
+
+            }
+        }
+
+
+        else{
+            Intent comunicacion = new Intent(MainActivity.this, RecibeDatos.class );
+            Bundle costal = new Bundle();
+            costal.putIntegerArrayList("ArrayList", ArrayValores);
+            comunicacion.putExtras(costal);
+            super.startActivity(comunicacion);
+        }
+
+    }
+}
